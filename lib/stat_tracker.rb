@@ -4,12 +4,17 @@ class StatTracker
 
   def self.from_csv(hash)
     # map each line to the first level key
+  #   hash.each do |key, value|
+  #     hash[key] = File.open(value).map do |line|
+  #     line = line.split("\r\n")
+  #   end
+  #   key
+  # end
+
     hash.each do |key, value|
-      hash[key] = File.open(value).map do |line|
-      line = line.split("\r\n")
+      binding.pry
+      hash[key] = CSV.table(value)
     end
-    key
-  end
     # csv.each
     # create ruby objects
     # CSV.each_row do |row|
