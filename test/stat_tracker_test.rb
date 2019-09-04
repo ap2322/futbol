@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/stat_tracker'
+require 'csv'
 require 'pry'
 
 class StatTrackerTest < Minitest::Test
@@ -16,6 +17,7 @@ class StatTrackerTest < Minitest::Test
       game_teams: game_teams_path
     }
     @stat_tracker = StatTracker.from_csv(@locations)
+    binding.pry
   end
 
   def test_from_csv
