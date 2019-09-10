@@ -62,4 +62,28 @@ class SeasonToTeamStatsTest < Minitest::Test
   def test_biggest_surprise
     assert_equal "Real Salt Lake", @stat_tracker.biggest_surprise("20162017")
   end
+
+  def test_winningest_coach
+    assert_equal "smile", @stat_tracker.winningest_coach("20162017")
+  end
+
+  def test_worst_coach
+    assert_equal "frown", @stat_tracker.worst_coach("20162017")
+  end
+
+  def test_most_accurate_team
+    assert_equal "happy", @stat_tracker.most_accurate_team("20162017")
+  end
+
+  def test_least_accurate_team
+    assert_equal "sad", @stat_tracker.least_accurate_team("20162017")
+  end
+
+  def test_most_tackles
+    assert_equal "blank_1", @stat_tracker.most_tackles("20162017")
+  end
+  
+  def test_fewest_tackles
+    assert_equal "black_2", @stat_tracker.fewest_tackles("20162017")
+  end
 end
