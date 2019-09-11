@@ -5,12 +5,8 @@ module OpponentStat
       game_obj.away_team_id == team_id || game_obj.home_team_id == team_id
     end
     relavent_games.each do |game|
-      oppo_id = nil
-      if game.home_team_id != team_id
-        oppo_id = game.home_team_id
-      else
-        oppo_id = game.away_team_id
-      end
+      oppo_id = game.home_team_id if game.home_team_id != team_id
+      oppo_id = game.away_team_id if game.home_team_id == team_id
       opponent_hash[oppo_id] ||= {"WINS" => [], "LOSS" => [], "TIES" => []}
       if game.home_team_id == team_id
         opponent_hash[oppo_id]["WINS"] << game if game.home_goals > game.away_goals
