@@ -31,14 +31,12 @@ class SeasonToTeamStatsTest < Minitest::Test
           :goal_count=>7,
           :shot_count=>34,
           :tackle_count=>123},
-          :game_ids=>["2016030171", "2016030172", "2016030173", "2016030174"],
         :regular_season=>{
           :game_count=>0,
           :win_count=>0,
           :goal_count=>0,
           :shot_count=>0,
           :tackle_count=>0},
-          :game_ids=>[],
         },
       "24"=>{
         :postseason=>{
@@ -47,14 +45,12 @@ class SeasonToTeamStatsTest < Minitest::Test
           :goal_count=>12,
           :shot_count=>29,
           :tackle_count=>106},
-          :game_ids=>["2016030171", "2016030172", "2016030173", "2016030174"],
         :regular_season=>{
           :game_count=>0,
           :win_count=>0,
           :goal_count=>0,
           :shot_count=>0,
           :tackle_count=>0},
-          :game_ids=>[],
         }
     }
     assert_equal expected, @stat_tracker.seasonal_info("20162017")
@@ -68,8 +64,17 @@ class SeasonToTeamStatsTest < Minitest::Test
     assert_equal "Real Salt Lake", @stat_tracker.biggest_surprise("20162017")
   end
 
+  def test_coach_records
+    expected = {
+      "Glen Gulutzan"=>{:game_count=>4, :win_count=>0},
+      "Randy Carlyle"=>{:game_count=>4, :win_count=>4}
+    }
+    assert_equal expected, @stat_tracker.coach_records("20162017")
+  end
+
   def test_winningest_coach
-    assert_equal "smile", @stat_tracker.winningest_coach("20162017")
+    assert_equal "Randy Carlyle", @stat_tracker.winningest_coach("20162017")
+    assert_equal "Alain Vigneault", @stat_tracker.winningest_coach("20142015")
   end
 
   def test_worst_coach
