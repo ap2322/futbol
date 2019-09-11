@@ -26,6 +26,22 @@ class LeagueStatTest < Minitest::Test
     assert_equal 16, @stat_tracker.count_of_teams
   end
 
+  def test_team_id_and_goals
+    expected_keys = ["28", "24", "30", "16", "17", "19", "2", "1", "14",
+      "4", "15", "5", "3", "26", "6", "20"]
+    expected_nested_hash_keys = [:game_count,:goals,:opponent_goals,
+      :goals_when_home, :home_games, :goals_when_away, :away_games, :away_wins]
+    expected_nested_hash_values = [3, 6, 6, 2, 1, 4, 2, 1]
+
+    assert_instance_of Hash, @stat_tracker.team_id_and_goals
+    assert_equal expected_keys, @stat_tracker.team_id_and_goals.keys
+    assert_instance_of Array, @stat_tracker.team_id_and_goals.values
+    assert_instance_of Hash, @stat_tracker.team_id_and_goals.values[0]
+    assert_equal expected_nested_hash_keys, @stat_tracker.team_id_and_goals.values[0].keys
+    assert_equal expected_nested_hash_values, @stat_tracker.team_id_and_goals.values[0].values
+    assert_equal 6, @stat_tracker.team_id_and_goals.values[0][:goals]
+  end
+
   def test_best_offense
     assert_equal "Real Salt Lake", @stat_tracker.best_offense
   end
