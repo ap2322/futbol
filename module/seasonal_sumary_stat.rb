@@ -1,18 +1,14 @@
 module SeasonalSumaryStat
 
   def seasonal_summary_helper(team_id)
-    team_game_id = 0
     season_games = Hash.new
     all_game_teams.each do |game_id, hash_pair|
       hash_pair.each do |key, game_team_obj|
         if team_id == game_team_obj.team_id
           team_game_id = game_team_obj.game_id
           season_games[all_games[team_game_id].season] ||= {postseason: [], regular_season: []}
-          if all_games[team_game_id].type == 'Postseason'
-            season_games[all_games[team_game_id].season][:postseason] << game_team_obj
-          elsif all_games[team_game_id].type == 'Regular Season'
-            season_games[all_games[team_game_id].season][:regular_season] << game_team_obj
-          end
+          season_games[all_games[team_game_id].season][:postseason] << game_team_obj if all_games[team_game_id].type == 'Postseason'
+          season_games[all_games[team_game_id].season][:regular_season] << game_team_obj if all_games[team_game_id].type == 'Regular Season'
         end
       end
     end
@@ -62,4 +58,5 @@ module SeasonalSumaryStat
     oppo_game_teams.flatten!
     oppo_game_teams.reject {|gt_obj| gt_obj.team_id == team_id}
   end
+  
 end

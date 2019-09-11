@@ -27,16 +27,10 @@ class SeasonToTeamStatsTest < Minitest::Test
       "20"=>{
         :postseason=>{
           :game_count=>4,
-          :win_count=>0,
           :goal_count=>7,
           :shot_count=>34,
           :tackle_count=>123},
-        :regular_season=>{
-          :game_count=>0,
-          :win_count=>0,
-          :goal_count=>0,
-          :shot_count=>0,
-          :tackle_count=>0},
+        :regular_season=>{}
         },
       "24"=>{
         :postseason=>{
@@ -45,12 +39,7 @@ class SeasonToTeamStatsTest < Minitest::Test
           :goal_count=>12,
           :shot_count=>29,
           :tackle_count=>106},
-        :regular_season=>{
-          :game_count=>0,
-          :win_count=>0,
-          :goal_count=>0,
-          :shot_count=>0,
-          :tackle_count=>0},
+        :regular_season=>{}
         }
     }
     assert_equal expected, @stat_tracker.seasonal_info("20162017")
