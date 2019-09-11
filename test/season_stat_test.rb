@@ -23,8 +23,23 @@ class SeasonStatTest < Minitest::Test
   end
 
   def test_seasons_to_game_teams
-    assert_equal Hash, @stat_tracker.seasons_to_game_teams("3").class
-    assert_equal GameTeam, @stat_tracker.seasons_to_game_teams("3").values[0][0].class
+    assert_instance_of Hash, @stat_tracker.seasons_to_game_teams("3")
+    assert_equal ["20122013", "20132014", "20142015"],
+      @stat_tracker.seasons_to_game_teams("3").keys
+    assert_instance_of Array, @stat_tracker.seasons_to_game_teams("3")["20122013"]
+    assert_equal 7, @stat_tracker.seasons_to_game_teams("3")["20122013"].length
+    assert_instance_of GameTeam, @stat_tracker.seasons_to_game_teams("3")["20122013"][0]
+    assert_equal "2012030131", @stat_tracker.seasons_to_game_teams("3")["20122013"][0].game_id
+    assert_equal "John Tortorella", @stat_tracker.seasons_to_game_teams("3")["20122013"][0].head_coach
+  end
+
+  def test_game_results
+    assert_instance_of Hash, @stat_tracker.game_results("4")
+    assert_equal (["WIN", "LOSS"]), @stat_tracker.game_results("4").keys
+    assert_instance_of Array, @stat_tracker.game_results("4")["WIN"]
+    assert_equal 1, @stat_tracker.game_results("4")["WIN"].length
+    assert_instance_of GameTeam, @stat_tracker.game_results("4")["WIN"][0]
+    assert_equal 8, @stat_tracker.game_results("4")["WIN"][0].takeaways
   end
 
   def test_best_season
@@ -45,11 +60,6 @@ class SeasonStatTest < Minitest::Test
 
   def test_fewest_goals_scored
     assert_equal 0, @stat_tracker.fewest_goals_scored("3")
-  end
-
-  def test_game_result
-    assert_equal (["WIN", "LOSS"]), @stat_tracker.game_results("4").keys
-    assert_instance_of GameTeam, @stat_tracker.game_results("4").values[0][0]
   end
 
   def test_biggest_team_blowout
