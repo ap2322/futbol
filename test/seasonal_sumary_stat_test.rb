@@ -68,15 +68,13 @@ class SeasonSumTest < Minitest::Test
   end
 
   def test_opponent_summary
-    # rewrite test to make sure game_team object returned from method doesn't have
-    # the same team_id as the team_id as the one passed into the method
-    gt_1 = mock("gt_1")
-    gt_2 = mock("gt_2")
-    gt_1.expects(:game_id).returns("2012030161")
-    gt_2.expects(:game_id).returns("2012030162")
-    # gt_2.expects(:result).returns("WIN")
-    arr = [gt_1, gt_2]
-    assert_instance_of Array, @stat_tracker.opponent_summary("24", arr)
-  end
+    arr = @stat_tracker.all_game_teams["2012030161"].values
+    is_given_team_in_result = @stat_tracker.opponent_summary("24", arr).any? { |gt|
+        gt.team_id == "24"}
 
+    assert_instance_of Array, @stat_tracker.opponent_summary("24", arr)
+    assert_instance_of GameTeam, @stat_tracker.opponent_summary("24", arr).first
+    assert_equal false, is_given_team_in_result
+  end
+  
 end

@@ -62,4 +62,5 @@ module SeasonalSumaryStat
     oppo_game_teams.flatten!
     oppo_game_teams.reject {|gt_obj| gt_obj.team_id == team_id}
   end
+  
 end
