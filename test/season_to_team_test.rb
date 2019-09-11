@@ -78,7 +78,8 @@ class SeasonToTeamStatsTest < Minitest::Test
   end
 
   def test_worst_coach
-    assert_equal "frown", @stat_tracker.worst_coach("20162017")
+    assert_equal "Glen Gulutzan", @stat_tracker.worst_coach("20162017")
+    assert_equal "Craig Berube", @stat_tracker.worst_coach("20142015")
   end
 
   def test_most_accurate_team

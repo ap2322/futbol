@@ -84,4 +84,13 @@ module SeasonToTeamStats
     winningest[0]
   end
 
+  def worst_coach(seasonid)
+    worst = coach_records(seasonid).min_by do |coach_name, coach_hash|
+      win_perc = coach_hash[:win_count] / coach_hash[:game_count].to_f
+      win_perc = 0 unless coach_hash[:game_count] > 0
+      win_perc
+    end
+    worst[0]
+  end
+
 end
