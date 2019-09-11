@@ -93,4 +93,47 @@ module SeasonToTeamStats
     worst[0]
   end
 
+  def most_accurate_team(seasonid)
+    most_accurate = seasonal_info(seasonid).max_by do |team_id, season_type_hash|
+      post_shot_perc = season_type_hash[:postseason][:goal_count] / season_type_hash[:postseason][:shot_count].to_f
+      post_shot_perc = 0 unless season_type_hash[:postseason][:shot_count] > 0
+      reg_shot_perc = season_type_hash[:regular_season][:goal_count] / season_type_hash[:regular_season][:shot_count].to_f
+      reg_shot_perc = 0 unless season_type_hash[:regular_season][:shot_count] > 0
+      post_shot_perc + reg_shot_perc
+    end
+    all_teams[most_accurate[0]].team_name
+  end
+
+  def least_accurate_team(seasonid)
+    least_accurate = seasonal_info(seasonid).min_by do |team_id, season_type_hash|
+      post_shot_perc = season_type_hash[:postseason][:goal_count] / season_type_hash[:postseason][:shot_count].to_f
+      post_shot_perc = 0 unless season_type_hash[:postseason][:shot_count] > 0
+      reg_shot_perc = season_type_hash[:regular_season][:goal_count] / season_type_hash[:regular_season][:shot_count].to_f
+      reg_shot_perc = 0 unless season_type_hash[:regular_season][:shot_count] > 0
+      post_shot_perc + reg_shot_perc
+    end
+    all_teams[least_accurate[0]].team_name
+  end
+
+  def most_tackles(seasonid)
+    most_tacks = seasonal_info(seasonid).max_by do |team_id, season_type_hash|
+      post_tackles = season_type_hash[:postseason][:tackle_count]
+      post_tackles = 0 unless season_type_hash[:postseason][:tackle_count] > 0
+      reg_tackles = season_type_hash[:regular_season][:tackle_count]
+      reg_tackles = 0 unless season_type_hash[:regular_season][:tackle_count] > 0
+      post_tackles + reg_tackles
+    end
+    all_teams[most_tacks[0]].team_name
+  end
+
+  def fewest_tackles(seasonid)
+    fewest_tacks = seasonal_info(seasonid).min_by do |team_id, season_type_hash|
+      post_tackles = season_type_hash[:postseason][:tackle_count]
+      post_tackles = 0 unless season_type_hash[:postseason][:tackle_count] > 0
+      reg_tackles = season_type_hash[:regular_season][:tackle_count]
+      reg_tackles = 0 unless season_type_hash[:regular_season][:tackle_count] > 0
+      post_tackles + reg_tackles
+    end
+    all_teams[fewest_tacks[0]].team_name
+  end
 end
