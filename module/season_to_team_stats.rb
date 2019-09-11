@@ -8,22 +8,7 @@ module SeasonToTeamStats
     games_in_season.each do |game|
       season_type = game.type.gsub(" ", "_").downcase.to_sym
       all_game_teams[game.game_id].each do |home_away, gt_obj|
-        reg_and_post_info[gt_obj.team_id] ||= {
-          postseason: {
-            game_count: 0,
-            win_count: 0,
-            goal_count: 0,
-            shot_count: 0,
-            tackle_count: 0,
-          },
-          regular_season: {
-            game_count: 0,
-            win_count: 0,
-            goal_count: 0,
-            shot_count: 0,
-            tackle_count: 0,
-          }
-        }
+        reg_and_post_info[gt_obj.team_id] ||= {postseason: Hash.new(0), regular_season: Hash.new(0)}
         reg_and_post_info[gt_obj.team_id][season_type][:game_count] += 1
         reg_and_post_info[gt_obj.team_id][season_type][:win_count] += 1 if gt_obj.result == 'WIN'
         reg_and_post_info[gt_obj.team_id][season_type][:goal_count] += gt_obj.goals
