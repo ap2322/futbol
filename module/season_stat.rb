@@ -1,11 +1,5 @@
 module SeasonStat
 
-  def team_game_info(team_id)
-    team_info_hash = Hash.new
-    team_info_hash["game_teams_objs"] = seasons_to_game_teams(team_id).values.flatten
-    team_info_hash
-  end
-
   def seasons_to_game_teams(team_id)
     team_game_id = 0
     season_games = Hash.new
@@ -22,7 +16,7 @@ module SeasonStat
   end
 
   def game_results(team_id)
-    team_game_info(team_id)["game_teams_objs"].group_by do |game_team_obj|
+    seasons_to_game_teams(team_id).values.flatten.group_by do |game_team_obj|
       game_team_obj.result
     end
   end
@@ -54,19 +48,19 @@ module SeasonStat
   end
 
   def average_win_percentage(team_id)
-    (game_results(team_id)["WIN"].length / team_game_info(team_id)["game_teams_objs"]
+    (game_results(team_id)["WIN"].length / seasons_to_game_teams(team_id).values.flatten
     .length.to_f).round(2)
   end
 
   def most_goals_scored(team_id)
-    highest_scoring_game = team_game_info(team_id)["game_teams_objs"].max_by do |game_team_obj|
+    highest_scoring_game = seasons_to_game_teams(team_id).values.flatten.max_by do |game_team_obj|
       game_team_obj.goals
     end
     highest_scoring_game.goals
   end
 
   def fewest_goals_scored(team_id)
-    lowest_scoring_game = team_game_info(team_id)["game_teams_objs"].min_by do |game_team_obj|
+    lowest_scoring_game = seasons_to_game_teams(team_id).values.flatten.min_by do |game_team_obj|
       game_team_obj.goals
     end
     lowest_scoring_game.goals
