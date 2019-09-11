@@ -36,7 +36,8 @@ class SeasonToTeamStatsTest < Minitest::Test
           :win_count=>0,
           :goal_count=>0,
           :shot_count=>0,
-          :tackle_count=>0}},
+          :tackle_count=>0},
+        },
       "24"=>{
         :postseason=>{
           :game_count=>4,
@@ -49,7 +50,7 @@ class SeasonToTeamStatsTest < Minitest::Test
           :win_count=>0,
           :goal_count=>0,
           :shot_count=>0,
-          :tackle_count=>0}
+          :tackle_count=>0},
         }
     }
     assert_equal expected, @stat_tracker.seasonal_info("20162017")
@@ -61,5 +62,39 @@ class SeasonToTeamStatsTest < Minitest::Test
 
   def test_biggest_surprise
     assert_equal "Real Salt Lake", @stat_tracker.biggest_surprise("20162017")
+  end
+
+  def test_coach_records
+    expected = {
+      "Glen Gulutzan"=>{:game_count=>4, :win_count=>0},
+      "Randy Carlyle"=>{:game_count=>4, :win_count=>4}
+    }
+    assert_equal expected, @stat_tracker.coach_records("20162017")
+  end
+
+  def test_winningest_coach
+    assert_equal "Randy Carlyle", @stat_tracker.winningest_coach("20162017")
+    assert_equal "Alain Vigneault", @stat_tracker.winningest_coach("20142015")
+  end
+
+  def test_worst_coach
+    assert_equal "Glen Gulutzan", @stat_tracker.worst_coach("20162017")
+    assert_equal "Craig Berube", @stat_tracker.worst_coach("20142015")
+  end
+
+  def test_most_accurate_team
+    assert_equal "happy", @stat_tracker.most_accurate_team("20162017")
+  end
+
+  def test_least_accurate_team
+    assert_equal "sad", @stat_tracker.least_accurate_team("20162017")
+  end
+
+  def test_most_tackles
+    assert_equal "blank_1", @stat_tracker.most_tackles("20162017")
+  end
+
+  def test_fewest_tackles
+    assert_equal "black_2", @stat_tracker.fewest_tackles("20162017")
   end
 end

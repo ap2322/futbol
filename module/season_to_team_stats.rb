@@ -46,13 +46,51 @@ module SeasonToTeamStats
   end
 
   def biggest_surprise(seasonid)
-    bust = seasonal_info(seasonid).min_by do |team_id, season_type_hash|
+    surprise = seasonal_info(seasonid).min_by do |team_id, season_type_hash|
       post_win_perc = season_type_hash[:postseason][:win_count] / season_type_hash[:postseason][:game_count].to_f
       post_win_perc = 0 unless season_type_hash[:postseason][:game_count] > 0
       reg_win_perc = season_type_hash[:regular_season][:win_count] / season_type_hash[:regular_season][:game_count].to_f
       reg_win_perc = 0 unless season_type_hash[:regular_season][:game_count] > 0
       reg_win_perc - post_win_perc
     end
-    all_teams[bust[0]].team_name
+    all_teams[surprise[0]].team_name
   end
+
+  def coach_records(seasonid)
+    coaches_hash = Hash.new
+    games_in_season = all_games.map do |game_id, game_obj|
+      game_obj if game_obj.season == seasonid
+    end.compact
+
+    games_in_season.each do |game|
+      all_game_teams[game.game_id].each do |home_away, gt_obj|
+        coaches_hash[gt_obj.head_coach] ||= {
+            game_count: 0,
+            win_count: 0,
+          }
+        coaches_hash[gt_obj.head_coach][:game_count] += 1
+        coaches_hash[gt_obj.head_coach][:win_count] += 1 if gt_obj.result == 'WIN'
+      end
+    end
+    coaches_hash
+  end
+
+  def winningest_coach(seasonid)
+    winningest = coach_records(seasonid).max_by do |coach_name, coach_hash|
+      win_perc = coach_hash[:win_count] / coach_hash[:game_count].to_f
+      win_perc = 0 unless coach_hash[:game_count] > 0
+      win_perc
+    end
+    winningest[0]
+  end
+
+  def worst_coach(seasonid)
+    worst = coach_records(seasonid).min_by do |coach_name, coach_hash|
+      win_perc = coach_hash[:win_count] / coach_hash[:game_count].to_f
+      win_perc = 0 unless coach_hash[:game_count] > 0
+      win_perc
+    end
+    worst[0]
+  end
+
 end
