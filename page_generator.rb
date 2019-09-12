@@ -12,7 +12,8 @@ class PageGenerator
                 :stat_tracker,
                 :all_games,
                 :all_teams,
-                :all_game_teams
+                :all_game_teams,
+                :home
 
   def initialize(stat_tracker, template, name)
     @name = name
@@ -21,6 +22,7 @@ class PageGenerator
     @all_teams = stat_tracker.all_teams
     @all_game_teams = stat_tracker.all_game_teams
     @template = template
+    @home = './site/index.html'
   end
 
   def render()
@@ -54,3 +56,6 @@ game_stats_site.save('./site/game_stats.html')
 
 league_stats_site = PageGenerator.new(stat_tracker, league_stats_table, "League Statistics")
 league_stats_site.save('./site/league_stats.html')
+
+season_stats_site = PageGenerator.new(stat_tracker, season_stats_table, "Season Statistics")
+season_stats_site.save('./site/season_stats.html')
