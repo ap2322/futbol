@@ -1,4 +1,6 @@
-
+module GameStatPage
+  def game_stats_table
+    %{
       <!DOCTYPE html>
       <html>
         <head>
@@ -12,7 +14,7 @@
               </ol>
               </nav>
           </header>
-          <h1>Game Statistics</h1>
+          <h1><%= name %></h1>
       <table>
         <thead>
           <tr>
@@ -23,31 +25,31 @@
           <tbody>
             <tr>
             <td> Highest Total Score </td>
-            <td>11</td>
+            <td><%= stat_tracker.highest_total_score %></td>
             </tr>
             <tr>
             <td> Lowest Total Score </td>
-            <td>0</td>
+            <td><%= stat_tracker.lowest_total_score %></td>
             </tr>
             <tr>
             <td> Biggest Blowout </td>
-            <td>8</td>
+            <td><%= stat_tracker.biggest_blowout %></td>
             </tr>
             <tr>
             <td> Percentage Home Wins </td>
-            <td>0.44</td>
+            <td><%= stat_tracker.percentage_home_wins %></td>
             </tr>
             <tr>
             <td> Percentage Visitor Wins </td>
-            <td>0.36</td>
+            <td><%= stat_tracker.percentage_visitor_wins %></td>
             </tr>
             <tr>
             <td> Percentage Ties </td>
-            <td>0.2</td>
+            <td><%= stat_tracker.percentage_ties %></td>
             </tr>
             <tr>
             <td> Average Goals Per Game </td>
-            <td>4.22</td>
+            <td><%= stat_tracker.average_goals_per_game %></td>
             </tr>
         </tbody>
       </table>
@@ -63,46 +65,18 @@
         </tr>
         </thead>
       <tbody>
-        
+        <% stat_tracker.count_of_games_by_season.each do |season, count| %>
           <tr>
-          <td>20122013</td>
-          <td>806</td>
-          <td>4.12
+          <td><%= season %></td>
+          <td><%= count %></td>
+          <td><%= stat_tracker.average_goals_by_season[season] %>
           </tr>
-        
-          <tr>
-          <td>20162017</td>
-          <td>1317</td>
-          <td>4.23
-          </tr>
-        
-          <tr>
-          <td>20142015</td>
-          <td>1319</td>
-          <td>4.14
-          </tr>
-        
-          <tr>
-          <td>20152016</td>
-          <td>1321</td>
-          <td>4.16
-          </tr>
-        
-          <tr>
-          <td>20132014</td>
-          <td>1323</td>
-          <td>4.19
-          </tr>
-        
-          <tr>
-          <td>20172018</td>
-          <td>1355</td>
-          <td>4.44
-          </tr>
-        
+        <% end %>
       </tbody>
       </table>
 
       </body>
     </html>
-    
+    }
+  end
+end

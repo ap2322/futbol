@@ -1,12 +1,21 @@
 require_relative 'lib/stat_tracker'
-require_relative 'site/templates'
+require_relative 'site/templates/team_stat_page'
+require_relative 'site/templates/game_stat_page'
+require_relative 'site/templates/league_stats_page'
+require_relative 'site/templates/season_stats_page'
 require 'csv'
 require 'erb'
-include Templates
+include TeamStatPage
+include GameStatPage
+include LeagueStatsPage
+include SeasonStatsPage
 
 class PageGenerator
   include ERB::Util
-  include Templates
+  include TeamStatPage
+  include GameStatPage
+  include LeagueStatsPage
+  include SeasonStatsPage
 
   attr_accessor :name,
                 :stat_tracker,

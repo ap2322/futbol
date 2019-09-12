@@ -1,4 +1,7 @@
-
+module LeagueStatsPage
+  
+  def league_stats_table
+    %{
       <!DOCTYPE html>
       <html>
         <head>
@@ -12,7 +15,7 @@
             </ol>
             </nav>
         </header>
-          <h1>League Statistics</h1>
+          <h1><%= name %></h1>
           <table>
             <thead>
                 <tr>
@@ -32,29 +35,28 @@
               </thead>
             <tbody>
               <tr>
-                <td>32</td>
-                <td>Reign FC</td>
-                <td>Utah Royals FC</td>
-                <td>FC Cincinnati</td>
-                <td>Columbus Crew SC</td>
-                <td>FC Dallas</td>
-                <td>Reign FC</td>
-                <td>San Jose Earthquakes</td>
-                <td>Utah Royals FC</td>
-                <td>Reign FC</td>
-                <td>San Jose Earthquakes</td>
+                <td><%= stat_tracker.count_of_teams %></td>
+                <td><%= stat_tracker.best_offense %></td>
+                <td><%= stat_tracker.worst_offense %></td>
+                <td><%= stat_tracker.best_defense %></td>
+                <td><%= stat_tracker.worst_defense %></td>
+                <td><%= stat_tracker.highest_scoring_visitor %></td>
+                <td><%= stat_tracker.highest_scoring_home_team %></td>
+                <td><%= stat_tracker.lowest_scoring_visitor %></td>
+                <td><%= stat_tracker.lowest_scoring_home_team %></td>
+                <td><%= stat_tracker.winningest_team %></td>
+                <td><%= stat_tracker.best_fans %></td>
                 <td>
-                  
-                    Houston Dynamo
-
-                    
-                    Utah Royals FC
-
-                    
+                  <% stat_tracker.worst_fans.each do |team| %>
+                    <%=team + "\n" %>
+                    <% end %>
                 </td>
               </tr>
             </tbody>
         </table>
       </body>
     </html>
-    
+    }
+  end
+
+end
