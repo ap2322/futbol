@@ -1,24 +1,13 @@
-require './lib/stat_tracker'
+require_relative 'lib/stat_tracker'
+require_relative 'site/templates'
 require 'csv'
 require 'erb'
-
-def get_template()
-  %{
-  <html>
-    <body>
-      <h1><%= name %></h1>
-      <ul>
-        <% all_teams.each do |team_id, team| %>
-          <li><%= team.team_name %></li>
-        <% end %>
-      </ul>
-    </body>
-  </html>
-  }
-end
+include Templates
 
 class PageGenerator
   include ERB::Util
+  include Templates
+
   attr_accessor :name,
                 :stat_tracker,
                 :all_games,
@@ -58,5 +47,5 @@ locations = {
 
 stat_tracker = StatTracker.from_csv(locations)
 
-site = PageGenerator.new(stat_tracker, get_template, "Stat Attack!")
+site = PageGenerator.new(stat_tracker, table, "Stat Attack!")
 site.save('./site/index.html')
