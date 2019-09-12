@@ -48,6 +48,10 @@ table {
   padding: 10px;
 }
 
+.half {
+  width: 50%;
+}
+
 table td {
   border: 1px solid #27394C;
   padding: 5px;
@@ -59,4 +63,8 @@ table thead {
   background-color: #B3D89C;
   color: #27394C;
   font-size: 18px;
+}
+
+.first {
+  background-color: #ffffff
 }
