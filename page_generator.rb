@@ -46,6 +46,8 @@ locations = {
 }
 
 stat_tracker = StatTracker.from_csv(locations)
+team_stat_site = PageGenerator.new(stat_tracker, team_stat_table, "Team Statistics")
+team_stat_site.save('./site/team_stats.html')
 
-site = PageGenerator.new(stat_tracker, table, "Stat Attack!")
-site.save('./site/index.html')
+game_stats_site = PageGenerator.new(stat_tracker, game_stats_table, "Game Statistics")
+game_stats_site.save('./site/game_stats.html')
