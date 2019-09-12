@@ -51,3 +51,6 @@ team_stat_site.save('./site/team_stats.html')
 
 game_stats_site = PageGenerator.new(stat_tracker, game_stats_table, "Game Statistics")
 game_stats_site.save('./site/game_stats.html')
+
+league_stats_site = PageGenerator.new(stat_tracker, league_stats_table, "League Statistics")
+league_stats_site.save('./site/league_stats.html')
